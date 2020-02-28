@@ -1,0 +1,1 @@
+java -jar -Djavax.net.ssl.keyStore=/home/qwerty/LabsSecurity/examplestore -Djavax.net.ssl.keyStorePassword=javajava Laba1Server2-1.0-SNAPSHOT.jar --type SSL

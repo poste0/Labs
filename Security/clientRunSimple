@@ -1,0 +1,1 @@
+java -jar -Djavax.net.ssl.trustStore=/home/qwerty/LabsSecurity/examplestore -Djavax.net.ssl.trustStorePassword=javajava Laba1-1.0-SNAPSHOT.jar --proxy 127.0.0.1 --proxyPort 10000 --server 127.0.0.1 --serverPort 10009 --image /home/qwerty/LabsSecurity/Laba1/src/main/resources/a.png --type Simple
