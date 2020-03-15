@@ -22,8 +22,8 @@ a = np.random.randn(N_c, N_c)
 b = np.random.randn(N_c, N_c)
 c = np.zeros((N_c, N_c))
 
-block_size = (10, 10, 1)
-grid_size = (int(N_c / 10), int(N_c / 10))
+block_size = (2, 2, 1)
+grid_size = (int((N_c + block_size[0] - 1) / 2), int((N_c + block_size[1] - 1) / 2))
 
 multiply = mod.get_function("multiply")
 
@@ -41,7 +41,7 @@ for i in range(N_c):
 end_cpu = time.time()
 print('Time of GPU {}'.format(end - start))
 print('Time of CPU {}'.format(end_cpu - start_cpu))
-if np.allclose(c, c_cpu):
+if np.allclose(c, c_cpu, 0.1, 0.1):
 	print('Matrixes from cpu and gpu are close')
 else:
 	print('Matrixes from cpu and gpu are different')
