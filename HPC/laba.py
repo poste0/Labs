@@ -18,8 +18,8 @@ args = int(sys.argv[1])
 N = np.array([args])
 N_c = N[0]
 
-a = np.random.randn(0, 10, (N_c, N_c))
-b = np.random.randn(0, 10, (N_c, N_c))
+a = np.random.randint(0, 10, (N_c, N_c))
+b = np.random.randint(0, 10, (N_c, N_c))
 c = np.zeros((N_c, N_c))
 
 block_size = (10, 10, 1)
