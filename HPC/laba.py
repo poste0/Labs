@@ -18,8 +18,8 @@ args = int(sys.argv[1])
 N = np.array([args])
 N_c = N[0]
 
-a = np.random.randint(0, 10, (N_c, N_c))
-b = np.random.randint(0, 10, (N_c, N_c))
+a = np.random.randn(N_c, N_c)
+b = np.random.randn(N_c, N_c)
 c = np.zeros((N_c, N_c))
 
 block_size = (10, 10, 1)
@@ -41,4 +41,7 @@ for i in range(N_c):
 end_cpu = time.time()
 print('Time of GPU {}'.format(end - start))
 print('Time of CPU {}'.format(end_cpu - start_cpu))
-print((c == c_cpu).all())
+if np.allclose(c, c_cpu):
+	print('Matrixes from cpu and gpu are close')
+else:
+	print('Matrixes from cpu and gpu are different')
