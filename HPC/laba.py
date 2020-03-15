@@ -14,15 +14,19 @@ mod = SourceModule("""
 	}
 """)
 args = int(sys.argv[1])
+
 N = np.array([args])
 N_c = N[0]
-a = np.random.randn(N_c, N_c)
-b = np.random.randn(N_c, N_c)
+
+a = np.random.randn(0, 10, (N_c, N_c))
+b = np.random.randn(0, 10, (N_c, N_c))
 c = np.zeros((N_c, N_c))
+
 block_size = (10, 10, 1)
 grid_size = (int(N_c / 10), int(N_c / 10))
-print(grid_size)
+
 multiply = mod.get_function("multiply")
+
 start = time.time()
 multiply(drv.In(a), drv.In(b), drv.Out(c), drv.In(N), block = block_size, grid = grid_size)
 drv.Context.synchronize()
@@ -35,5 +39,6 @@ for i in range(N_c):
 		for k in range(N_c):
 			c_cpu[i, j] += a[i, k] * b[k, j]
 end_cpu = time.time()
-print(end - start)
-print(end_cpu - start_cpu)
+print('Time of GPU {}'.format(end - start))
+print('Time of CPU {}'.format(end_cpu - start_cpu))
+print((c == c_cpu).all())
