@@ -1,0 +1,9 @@
+Time of GPU 0.012617111206054688
+Time of CPU 68.33775997161865
+Matrixes from cpu and gpu are close
+Time of GPU 0.012656450271606445
+Time of CPU 67.39440178871155
+Matrixes from cpu and gpu are close
+Time of GPU 0.012584924697875977
+Time of CPU 69.23864555358887
+Matrixes from cpu and gpu are close
