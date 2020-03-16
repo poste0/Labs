@@ -31,6 +31,21 @@ public class Main {
             System.out.println("Node " + chordNode.getId());
             System.out.println(chordNode);
         });
+
+        chordNodes = addNode(6, nodes, m);
+
+        chordNodes.forEach(chordNode -> {
+            System.out.println("Node " + chordNode.getId());
+            System.out.println(chordNode);
+        });
+
+        chordNodes = deleteNode(6, nodes, m);
+
+        chordNodes.forEach(chordNode -> {
+            System.out.println("Node " + chordNode.getId());
+            System.out.println(chordNode);
+        });
+
     }
 
     private static void testMain(){
@@ -140,4 +155,31 @@ public class Main {
         return input > a && input < b;
     }
 
+    public static List<ChordNode> addNode(Integer id, List<Integer> nodes, int m){
+        if(!nodes.contains(id)){
+            nodes.add(id);
+        }
+
+        List<ChordNode> result = new ArrayList<>();
+
+        for (int i = 0; i < nodes.size(); i++) {
+            result.add(new ChordNode(nodes.get(i), m, nodes));
+        }
+
+        return result;
+    }
+
+    public static List<ChordNode> deleteNode(Integer id, List<Integer> nodes, int m){
+        if(nodes.contains(id)){
+            nodes.remove(id);
+        }
+
+        List<ChordNode> result = new ArrayList<>();
+
+        for (int i = 0; i < nodes.size(); i++) {
+            result.add(new ChordNode(nodes.get(i), m, nodes));
+        }
+
+        return result;
+    }
 }
