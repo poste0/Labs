@@ -6,7 +6,7 @@
 
 # Results
 
-| N    | CPU time(ms)   | GPU time(ms) | CPU time / GPU time |
+| N    | CPU time(seconds)   | GPU time(seconds) | CPU time / GPU time |
 |------|------------|----------|---------------------|
 | 128  | 1.07922    | 0.00074  | 1458                |
 | 256  | 8.38179    | 0.0022   | 3810                |
