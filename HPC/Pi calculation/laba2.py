@@ -42,7 +42,7 @@ grid_size = (int(N_c / (128 * block_size[0])), 1)
 pi_calc = mod.get_function("piCalc")
 
 start = time.time()
-pi_calc(drv.In(x), drv.In(y), drv.Out(count), drv.In(N), drv.Out(z), block = block_size, grid = grid_size)
+pi_calc(drv.In(x), drv.In(y), drv.Out(count), drv.In(N), block = block_size, grid = grid_size)
 drv.Context.synchronize()
 end = time.time()
 
