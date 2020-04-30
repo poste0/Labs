@@ -46,4 +46,15 @@ pi_calc(drv.In(x), drv.In(y), drv.Out(count), drv.In(N), block = block_size, gri
 drv.Context.synchronize()
 end = time.time()
 
-print(count * 4 / N_c)
+count_cpu = 0
+start_cpu = time.time()
+for i in range(N_c):
+	if x[i] ** 2 + y[i] ** 2 < 1:
+		count_cpu += 1
+end_cpu = time.time()
+print('Time of GPU {}'.format(end - start))
+print('Time of CPU {}'.format(end_cpu - start_cpu))
+print('Pi of GPU {}'.format(count * 4 / N_c))
+print('Pi of CPU {}'.format(count_cpu * 4 / N_c))
+print('Time of GPU / Time of CPU {}'.format((end_cpu - start_cpu) / (end - start)))
+print('Pi of CPU - Pi of GPU {}'.format((count_cpu - count) * 4 / N_c))
