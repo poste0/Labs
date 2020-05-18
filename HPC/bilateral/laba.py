@@ -71,7 +71,7 @@ block_size = (16, 16, 1)
 grid_size = (int(np.ceil(M/block_size[0])),int(np.ceil(N/block_size[1])))
 
 result = filter_cpu(image, sigma_r, sigma_d)
-result_gpu = np.zeros((N, M))
+result_gpu = np.zeros((N, M), dtype = np.uint32)
 
 filter_bilat = mod.get_function("filter_bilat")
 
