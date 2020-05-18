@@ -62,7 +62,7 @@ path_image = args[1]
 sigma_r = float(args[2])
 sigma_d = float(args[3])
 
-image = cv2.imread(path_image)
+image = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE)
 
 N = image.shape[0]
 M = image.shape[1]
