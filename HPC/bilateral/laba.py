@@ -65,13 +65,13 @@ sigma_d = float(args[3])
 
 image = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE)
 
-N = image.shape[0]
-M = image.shape[1]
+M = image.shape[0]
+N = image.shape[1]
 block_size = (16, 16, 1)
-grid_size = (int(np.ceil(N/block_size[0])),int(np.ceil(M/block_size[1])))
+grid_size = (int(np.ceil(M/block_size[0])),int(np.ceil(N/block_size[1])))
 
 result = filter_cpu(image, sigma_r, sigma_d)
-result_gpu = np.zeros((N, M), dtype = np.uint32)
+result_gpu = np.zeros((M, N), dtype = np.uint32)
 
 filter_bilat = mod.get_function("filter_bilat")
 
@@ -81,7 +81,7 @@ tex.set_address_mode(0, drv.address_mode.MIRROR)
 tex.set_address_mode(1, drv.address_mode.MIRROR)
 drv.matrix_to_texref(image.astype(np.uint32), tex, order="C")
 
-filter_bilat(drv.Out(result_gpu), np.int32(N), np.int32(M), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
+filter_bilat(drv.Out(result_gpu), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
 drv.Context.synchronize()
 
 cv2.imwrite('labaresult.bmp', result_gpu.astype(np.uint8))
