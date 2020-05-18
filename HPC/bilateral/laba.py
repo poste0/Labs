@@ -53,7 +53,7 @@ result_gpu = np.zeros((N, M))
 
 filter = mod.get_function("filter")
 
-filter(drv.Out(gpu_result), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block = block_size, grid = grid_size)
+filter(drv.Out(result_gpu), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block = block_size, grid = grid_size)
 
 cv2.imwrite('labaresult.png', result_gpu)
 
