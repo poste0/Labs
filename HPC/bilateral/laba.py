@@ -81,7 +81,7 @@ tex.set_address_mode(0, drv.address_mode.MIRROR)
 tex.set_address_mode(1, drv.address_mode.MIRROR)
 drv.matrix_to_texref(image.astype(np.int32), tex, order="C")
 
-bilinear_interpolation_kernel(driver.Out(result_gpu), np.int32(N), np.int32(M), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
+filter(driver.Out(result_gpu), np.int32(N), np.int32(M), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
 
 cv2.imwrite('labaresult.png', result_gpu)
 cv2.imwrite('labaresult_cpu.png', result)
