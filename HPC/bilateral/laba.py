@@ -6,7 +6,7 @@ import sys
 import time
 import cv2
 
-args = int(sys.argv[1])
+args = sys.argv[1]
 
 mod = SourceModule("""
 	texture<unsigned int, 2, cudaReadModeElementType> tex;
@@ -38,8 +38,8 @@ __global__ void filter(unsigned int* result, const int M, const int N, const flo
 """)
 
 path_image = args[0]
-sigma_r = args[1]
-sigma_d = args[2]
+sigma_r = float(args[1])
+sigma_d = float(args[2])
 
 image = cv2.imread(path_image)
 
@@ -53,7 +53,7 @@ result_gpu = np.zeros((N, M))
 
 filter = mod.get_function("filter")
 
-filter(drv.Out(gpu_result), drv.In(M), drv.In(N), drv.In(sigma_d), drv.In(sigma_r), block = block_size, grid = grid_size)
+filter(drv.Out(gpu_result), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block = block_size, grid = grid_size)
 
 cv2.imwrite('labaresult.png', result_gpu)
 
