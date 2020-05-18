@@ -33,26 +33,26 @@ mod = SourceModule("""
 
 texture<unsigned int, 2, cudaReadModeElementType> tex;
 
-__global__ void filter_bilat(unsigned int * __restrict__ d_result, const int M, const int N, const float sigma_d, const float sigma_r)
+__global__ void filter_bilat(unsigned int* result, const int M, const int N, const float sigma_d, const float sigma_r)
 {
     const int i = threadIdx.x + blockDim.x * blockIdx.x;
     const int j = threadIdx.y + blockDim.y * blockIdx.y;
 
 
-    if ((i<M)&&(j<N)) {
+    if ((i < M) && (j < N)) {
         float s = 0;
         float c = 0;
-        for (int l = i-1; l <= i+1; l++){
-            for (int k = j-1; k <= j+1; k++){
-                float img1 = tex2D(tex, k, l)/255;
-                float img2 = tex2D(tex, i, j)/255;
+        for (int l = i - 1; l <= i + 1; l++){
+            for (int k = j - 1; k <= j + 1; k++){
+                float img1 = tex2D(tex, k, l) / 255;
+                float img2 = tex2D(tex, i, j) / 255;
                 float g = exp(-(pow(k - i, 2) + pow(l - j, 2)) / pow(sigma_d, 2));
-                float r = exp(-pow((img1 - img2)*255, 2) / pow(sigma_r, 2));
-                c += g*r;
-                s += g*r*tex2D(tex, k, l);
+                float r = exp(-pow((img1 - img2) * 255, 2) / pow(sigma_r, 2));
+                c += g * r;
+                s += g * r * tex2D(tex, k, l);
             }
         }
-        d_result[i*N + j] = s / c;
+        d_result[i * N + j] = s / c;
     }
 
 
@@ -65,20 +65,19 @@ sigma_d = float(args[3])
 
 image = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE)
 
-M = image.shape[0]
-N = image.shape[1]
+N = image.shape[0]
+M = image.shape[1]
 block_size = (16, 16, 1)
 grid_size = (int(np.ceil(M/block_size[0])),int(np.ceil(N/block_size[1])))
 
+start_cpu = time.time()
 result = filter_cpu(image, sigma_r, sigma_d)
-result_gpu = np.zeros((M, N), dtype = np.uint32)
+end_cpu = time.time()
+result_gpu = np.zeros((N, M), dtype = np.uint32)
 
 filter_bilat = mod.get_function("filter_bilat")
 
-start = drv.Event()
-stop = drv.Event()
-
-start.record()
+start = time.time()
 
 tex = mod.get_texref("tex")
 tex.set_filter_mode(drv.filter_mode.LINEAR)
@@ -86,14 +85,14 @@ tex.set_address_mode(0, drv.address_mode.MIRROR)
 tex.set_address_mode(1, drv.address_mode.MIRROR)
 drv.matrix_to_texref(image.astype(np.uint32), tex, order="C")
 
-filter_bilat(drv.Out(result_gpu), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
+filter_bilat(drv.Out(result_gpu), np.int32(N), np.int32(M), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
 
-stop.record()
-stop.synchronize()
+drv.Context.synchronize()
+end = time.time()
 
 cv2.imwrite('labaresult.bmp', result_gpu.astype(np.uint8))
 cv2.imwrite('labaresult_cpu.bmp', result)
 
-print(result_gpu.astype(np.uint8))
-print(result)
+print('Time of GPU {}'.format(end - start))
+print('Time of CPU {}'.format(end_cpu - start_cpu))
 
