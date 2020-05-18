@@ -9,25 +9,25 @@ import cv2
 args = sys.argv
 
 def filter_cpu(image, sigma_r, sigma_d):
-	def filter_element(i, j):
-		c = 0
-		s = 0
-    		for k in range(i-1, i+2):
-        		for l in range(j-1, j+2):
-            			g = np.exp(-((k - i) ** 2 + (l - j) ** 2) / sigma_d ** 2)
-            			i1 = image[k, l]/255
-            			i2 = image[i, j]/255
-            			r = np.exp(-((i1 - i2)*255) ** 2 / sigma_r ** 2)
-            			c += g*r
-            			s += g*r*image[k, l]
-    		result = s / c
-    		return result
-	
-	result = np.zeros(image.shape)
-	for i in range(1, image.shape[0] - 1):
-		for j in range(1, image.shape[1] - 1)
-			result[i, j] = filter_pixel(i, j)
-	return result
+    def filter_element(i, j):
+        c = 0
+        s = 0
+        for k in range(i-1, i+2):
+            for l in range(j-1, j+2):
+                g = np.exp(-((k - i) ** 2 + (l - j) ** 2) / sigma_d ** 2)
+                i1 = image[k, l]/255
+                i2 = image[i, j]/255
+                r = np.exp(-((i1 - i2)*255) ** 2 / sigma_r ** 2)
+                c += g*r
+                s += g*r*image[k, l]
+        result = s / c
+        return result
+    
+    result = np.zeros(image.shape)
+    for i in range(1, image.shape[0] - 1):
+        for j in range(1, image.shape[1] - 1):
+            result[i, j] = filter_pixel(i, j)
+    return result
 
 mod = SourceModule("""
 	texture<unsigned int, 2, cudaReadModeElementType> tex;
