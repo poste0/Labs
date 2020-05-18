@@ -84,9 +84,9 @@ drv.matrix_to_texref(image.astype(np.int32), tex, order="C")
 filter_bilat(drv.Out(result_gpu), np.int32(N), np.int32(M), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
 drv.Context.synchronize()
 
-cv2.imwrite('labaresult.png', result_gpu.astype(np.uint8))
-cv2.imwrite('labaresult_cpu.png', result)
+cv2.imwrite('labaresult.bmp', result_gpu.astype(np.uint8))
+cv2.imwrite('labaresult_cpu.bmp', result)
 
-print(result_gpu.astype(bp.uint8))
+print(result_gpu.astype(np.uint8))
 print(result)
 
