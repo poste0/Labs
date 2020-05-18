@@ -13,7 +13,7 @@ mod = SourceModule("""
 		}	
 	}
 """)
-args = int(sys.argv)
+args = int(sys.argv[1])
 
 N = np.array([args])
 N_c = N[0]

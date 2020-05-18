@@ -37,9 +37,9 @@ __global__ void filter(unsigned int* result, const int M, const int N, const flo
 }
 """)
 
-path_image = args[0]
-sigma_r = float(args[1])
-sigma_d = float(args[2])
+path_image = args[1]
+sigma_r = float(args[2])
+sigma_d = float(args[3])
 
 image = cv2.imread(path_image)
 
