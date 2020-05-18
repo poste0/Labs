@@ -1,4 +1,4 @@
-# Matrix multiplication
+# Pi calculation
 # System configuration
 | CPU                                   | GPU                        | RAM   | OS                 |
 |---------------------------------------|----------------------------|-------|--------------------|
