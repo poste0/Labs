@@ -30,9 +30,8 @@ def filter_cpu(image, sigma_r, sigma_d):
     return result
 
 mod = SourceModule("""
-	texture<int, 2, cudaReadModeElementType> tex;
 
-__global__ void filter(int* result, const int M, const int N, const float sigma_d, const float sigma_r)
+__global__ void filter(int* result, int* image const int M, const int N, const float sigma_d, const float sigma_r)
 {
     const int i = threadIdx.x + blockDim.x * blockIdx.x;
     const int j = threadIdx.y + blockDim.y * blockIdx.y;
@@ -43,8 +42,8 @@ __global__ void filter(int* result, const int M, const int N, const float sigma_
         float c = 0;
         for (int l = i-1; l <= i+1; l++){
             for (int k = j-1; k <= j+1; k++){
-                float img1 = tex2D(tex, k, l)/255;
-                float img2 = tex2D(tex, i, j)/255;
+                float img1 = image[l, k]/255;
+                float img2 = image[i, j]/255;
                 float g = exp(-(pow(k - i, 2) + pow(l - j, 2)) / pow(sigma_d, 2));
                 float r = exp(-pow((img1 - img2)*255, 2) / pow(sigma_r, 2));
                 c += g*r;
@@ -80,7 +79,7 @@ tex.set_address_mode(0, drv.address_mode.MIRROR)
 tex.set_address_mode(1, drv.address_mode.MIRROR)
 drv.matrix_to_texref(image.astype(np.int32), tex, order="C")
 
-filter(drv.Out(result_gpu), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block = block_size, grid = grid_size, texrefs = [tex])
+filter(drv.Out(result_gpu), drv.In(image.astype(np.int32)) np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block = block_size, grid = grid_size, texrefs = [tex])
 
 cv2.imwrite('labaresult.png', result_gpu)
 cv2.imwrite('labaresult_cpu.png', result)
