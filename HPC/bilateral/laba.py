@@ -68,7 +68,7 @@ image = cv2.imread(path_image, cv2.IMREAD_GRAYSCALE)
 N = image.shape[0]
 M = image.shape[1]
 block_size = (16, 16, 1)
-grid_size = (int(np.ceil(M/block_size[0])),int(np.ceil(N/block_size[1])))
+grid_size = (int(np.ceil(N/block_size[0])),int(np.ceil(M/block_size[1])))
 
 start_cpu = time.time()
 result = filter_cpu(image, sigma_r, sigma_d)
