@@ -82,6 +82,7 @@ tex.set_address_mode(1, drv.address_mode.MIRROR)
 drv.matrix_to_texref(image.astype(np.int32), tex, order="C")
 
 filter(drv.Out(result_gpu), np.int32(N), np.int32(M), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
+drv.Context.synchronize()
 
 cv2.imwrite('labaresult.png', result_gpu.astype(np.uint8))
 cv2.imwrite('labaresult_cpu.png', result)
