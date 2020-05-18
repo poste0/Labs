@@ -8,6 +8,27 @@ import cv2
 
 args = sys.argv
 
+def filter_cpu(image, sigma_r, sigma_d):
+	def filter_element(i, j):
+		c = 0
+		s = 0
+    		for k in range(i-1, i+2):
+        		for l in range(j-1, j+2):
+            			g = np.exp(-((k - i) ** 2 + (l - j) ** 2) / sigma_d ** 2)
+            			i1 = image[k, l]/255
+            			i2 = image[i, j]/255
+            			r = np.exp(-((i1 - i2)*255) ** 2 / sigma_r ** 2)
+            			c += g*r
+            			s += g*r*image[k, l]
+    		result = s / c
+    		return result
+	
+	result = np.zeros(image.shape)
+	for i in range(1, image.shape[0] - 1):
+		for j in range(1, image.shape[1] - 1)
+			result[i, j] = filter_pixel(i, j)
+	return result
+
 mod = SourceModule("""
 	texture<unsigned int, 2, cudaReadModeElementType> tex;
 
@@ -48,7 +69,7 @@ M = image.shape[1]
 block_size = (2, 2, 1)
 grid_size = (int((N + block_size[0] - 1) / 2), int((M + block_size[1] - 1) / 2))
 
-result = np.zeros((N, M))
+result = filter_cpu(image, sigma_r, sigma_d)
 result_gpu = np.zeros((N, M))
 
 filter = mod.get_function("filter")
@@ -56,4 +77,5 @@ filter = mod.get_function("filter")
 filter(drv.Out(result_gpu), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block = block_size, grid = grid_size)
 
 cv2.imwrite('labaresult.png', result_gpu)
+cv2.imwrite('labaresult_cpu.png', result)
 
