@@ -75,6 +75,11 @@ result_gpu = np.zeros((M, N), dtype = np.uint32)
 
 filter_bilat = mod.get_function("filter_bilat")
 
+start = drv.Event()
+stop = drv.Event()
+
+start.record()
+
 tex = mod.get_texref("tex")
 tex.set_filter_mode(drv.filter_mode.LINEAR)
 tex.set_address_mode(0, drv.address_mode.MIRROR)
@@ -82,7 +87,9 @@ tex.set_address_mode(1, drv.address_mode.MIRROR)
 drv.matrix_to_texref(image.astype(np.uint32), tex, order="C")
 
 filter_bilat(drv.Out(result_gpu), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
-drv.Context.synchronize()
+
+stop.record()
+stop.synchronize()
 
 cv2.imwrite('labaresult.bmp', result_gpu.astype(np.uint8))
 cv2.imwrite('labaresult_cpu.bmp', result)
