@@ -6,7 +6,7 @@ import sys
 import time
 import cv2
 
-args = sys.argv[1]
+args = sys.argv
 
 mod = SourceModule("""
 	texture<unsigned int, 2, cudaReadModeElementType> tex;
