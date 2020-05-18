@@ -74,7 +74,13 @@ result_gpu = np.zeros((N, M))
 
 filter = mod.get_function("filter")
 
-filter(drv.Out(result_gpu), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block = block_size, grid = grid_size)
+tex = mod.get_texref("tex")
+tex.set_filter_mode(drv.filter_mode.LINEAR)
+tex.set_address_mode(0, drv.address_mode.MIRROR)
+tex.set_address_mode(1, drv.address_mode.MIRROR)
+drv.matrix_to_texref(image.astype(np.uint32), tex, order="C")
+
+filter(drv.Out(result_gpu), np.int32(M), np.int32(N), np.float32(sigma_d), np.float32(sigma_r), block = block_size, grid = grid_size, texrefs = [tex])
 
 cv2.imwrite('labaresult.png', result_gpu)
 cv2.imwrite('labaresult_cpu.png', result)
