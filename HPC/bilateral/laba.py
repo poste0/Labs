@@ -33,7 +33,7 @@ mod = SourceModule("""
 
 texture<unsigned int, 2, cudaReadModeElementType> tex;
 
-__global__ void filter(unsigned int * __restrict__ d_result, const int M, const int N, const float sigma_d, const float sigma_r)
+__global__ void filter_bilat(unsigned int * __restrict__ d_result, const int M, const int N, const float sigma_d, const float sigma_r)
 {
     const int i = threadIdx.x + blockDim.x * blockIdx.x;
     const int j = threadIdx.y + blockDim.y * blockIdx.y;
@@ -73,7 +73,7 @@ grid_size = (int(np.ceil(M/block_size[0])),int(np.ceil(N/block_size[1])))
 result = filter_cpu(image, sigma_r, sigma_d)
 result_gpu = np.zeros((N, M))
 
-filter = mod.get_function("filter")
+filter_bilat = mod.get_function("filter_bilat")
 
 tex = mod.get_texref("tex")
 tex.set_filter_mode(drv.filter_mode.LINEAR)
@@ -81,9 +81,12 @@ tex.set_address_mode(0, drv.address_mode.MIRROR)
 tex.set_address_mode(1, drv.address_mode.MIRROR)
 drv.matrix_to_texref(image.astype(np.int32), tex, order="C")
 
-filter(drv.Out(result_gpu), np.int32(N), np.int32(M), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
+filter_bilat(drv.Out(result_gpu), np.int32(N), np.int32(M), np.float32(sigma_d), np.float32(sigma_r), block=block_size, grid=grid_size, texrefs=[tex])
 drv.Context.synchronize()
 
 cv2.imwrite('labaresult.png', result_gpu.astype(np.uint8))
 cv2.imwrite('labaresult_cpu.png', result)
+
+print(result_gpu.astype(bp.uint8))
+print(result)
 
