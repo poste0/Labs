@@ -26,7 +26,7 @@ def filter_cpu(image, sigma_r, sigma_d):
     result = np.zeros(image.shape)
     for i in range(1, image.shape[0] - 1):
         for j in range(1, image.shape[1] - 1):
-            result[i, j] = filter_pixel(i, j)
+            result[i, j] = filter_element(i, j)
     return result
 
 mod = SourceModule("""
