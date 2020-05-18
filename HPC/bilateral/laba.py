@@ -52,7 +52,7 @@ __global__ void filter_bilat(unsigned int* result, const int M, const int N, con
                 s += g * r * tex2D(tex, k, l);
             }
         }
-        d_result[i * N + j] = s / c;
+        result[i * N + j] = s / c;
     }
 
 
