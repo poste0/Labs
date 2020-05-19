@@ -1,30 +1,23 @@
 package ru;
 
-import org.bytedeco.javacv.FrameGrabber;
-import org.bytedeco.javacv.FrameRecorder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import ru.service.FFMpegService;
+import org.springframework.core.env.Environment;
 
 import java.io.IOException;
 
 @SpringBootApplication
 public class Main {
+
     public static void main(String[] args) {
+        ApplicationContext context = SpringApplication.run(Main.class);
 
-
-        FFMpegService service = new FFMpegService();
-        try {
-            service.getVideo("rtsp://rtsp_user:testrtsp@91.222.129.138:65113", "/home/sergei/Labs/Security/Laba4/stream.m3u8");
-        } catch (FrameGrabber.Exception e) {
-            e.printStackTrace();
-        } catch (FrameRecorder.Exception e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        SpringApplication.run(Main.class);
+        StreamService service = context.getBean(StreamService.class);
+        service.startStream();
     }
+
+
 }

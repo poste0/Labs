@@ -1,31 +1,29 @@
-package ru.service;
+package ru;
 
 import org.bytedeco.javacv.*;
 import org.bytedeco.opencv.opencv_core.IplImage;
-import org.bytedeco.opencv.opencv_core.Mat;
-import org.springframework.scheduling.concurrent.ConcurrentTaskExecutor;
-import org.springframework.stereotype.Service;
-import static org.bytedeco.opencv.global.opencv_core.*;
-import static org.bytedeco.opencv.global.opencv_imgproc.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
+import static org.bytedeco.opencv.global.opencv_imgproc.cvSmooth;
+import static org.opencv.imgproc.Imgproc.CV_GAUSSIAN;
 
-public class FFMpegService {
+public class FFmpegHelper {
     public void getVideo(String url, String fileName) throws IOException {
         final FFmpegFrameGrabber grabber = FFmpegFrameGrabber.createDefault(url);
         File file = new File(fileName);
         if(!file.exists()){
             file.createNewFile();
         }
-        FFmpegFrameRecorder recorder = FFmpegFrameRecorder.createDefault(file, grabber.getImageWidth(), grabber.getImageHeight());
         setupGrabber(grabber);
         grabber.start();
+        FFmpegFrameRecorder recorder = FFmpegFrameRecorder.createDefault(file, grabber.getImageWidth(), grabber.getImageHeight());
         setupRecorder(recorder, grabber);
         recorder.start();
-        Executor executor = new ConcurrentTaskExecutor();
+        Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             while(true){
                 try {

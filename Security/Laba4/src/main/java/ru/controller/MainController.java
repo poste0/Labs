@@ -1,5 +1,6 @@
 package ru.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ import java.io.OutputStream;
 
 @Controller
 public class MainController {
+    @Value("${filePath}")
+    private String filePath;
+
     @RequestMapping(value = "/video", method = RequestMethod.GET, produces = "application/vnd.apple.mpegurl")
     public @ResponseBody byte[] getVideo(HttpServletResponse response, @RequestParam("name") String name) throws IOException {
         response.addHeader("Content-Type", "application/vnd.apple.mpegurl");
@@ -22,7 +26,7 @@ public class MainController {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Expose-Headers", "Content-Length");
 
-        File file = new File("/home/sergei/Labs/Security/Laba4/" + name);
+        File file = new File(filePath + name);
         byte[] bytes = FileCopyUtils.copyToByteArray(file);
 
         return bytes;
