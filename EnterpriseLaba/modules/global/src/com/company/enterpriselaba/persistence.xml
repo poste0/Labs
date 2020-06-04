@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+    <persistence-unit name="EnterpriseLaba" transaction-type="RESOURCE_LOCAL">
+
+        <class>com.company.enterpriselaba.entity.Theatre</class>
+        <class>com.company.enterpriselaba.entity.Film</class>
+        <class>com.company.enterpriselaba.entity.Show</class>
+        <class>com.company.enterpriselaba.entity.Auditorium</class>
+        <class>com.company.enterpriselaba.entity.Ticket</class>
+        <class>com.company.enterpriselaba.entity.Admin</class>
+    </persistence-unit>
+</persistence>
