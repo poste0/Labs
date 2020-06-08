@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="theatresTable"
+        messagesPack="com.company.enterpriselaba.web.screens.theatre">
+    <data readOnly="true">
+        <collection id="theatresDc"
+                    class="com.company.enterpriselaba.entity.Theatre"
+                    view="_local">
+            <loader id="theatresDl">
+                <query>
+                    <![CDATA[select e from enterpriselaba_Theatre e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="theatresTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="theatresTable"
+                dataLoader="theatresDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="theatresTable"
+                    width="100%"
+                    dataContainer="theatresDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="name"/>
+                <column id="address"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="theatresTable.create"/>
+                <button id="editBtn" action="theatresTable.edit"/>
+                <button id="removeBtn" action="theatresTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

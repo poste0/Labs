@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
 
+    <view entity="enterpriselaba_Show" name="show-view" extends="_local">
+        <property name="film" view="_local"/>
+        <property name="auditorium" view="_local"/>
+        <property name="theatre" view="_local"/>
+    </view>
+    <view entity="enterpriselaba_Auditorium" name="auditorium-view" extends="_local">
+        <property name="theatre" view="_local"/>
+    </view>
 </views>

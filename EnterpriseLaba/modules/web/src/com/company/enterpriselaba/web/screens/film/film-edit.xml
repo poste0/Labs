@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.enterpriselaba.web.screens.film">
+    <data>
+        <instance id="filmDc"
+                  class="com.company.enterpriselaba.entity.Film"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="filmDc">
+            <column width="250px">
+                <textField id="nameField"/>
+                <dateField id="startShowDateField" datatype="dateTime"/>
+                <textField id="periodOfShowingField" datatype="int"/>
+                <textArea id="descriptionField"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button caption="Ok"  invoke="onClick"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

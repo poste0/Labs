@@ -16,9 +16,9 @@ public interface FilmService {
 
     void deleteFilm(Film film);
 
-    void addShow(String name, Film film, Theatre theatre, Auditorium auditorium, Date showDate, Time showTime, Double price, Admin admin);
+    void addShow(String name, Film film, Theatre theatre, Auditorium auditorium, Date showDate, Double price, Admin admin);
 
     void deleteShow(Show show, Admin admin);
 
-    void changeShow(Show show, String name, Film film, Theatre theatre, Auditorium auditorium, Date showDate, Time showTime, Double price, Admin admin);
+    void changeShow(Show show, String name, Film film, Theatre theatre, Auditorium auditorium, Date showDate, Double price, Admin admin);
 }

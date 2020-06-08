@@ -83,17 +83,55 @@ public class FilmServiceBean implements FilmService {
     }
 
     @Override
-    public void addShow(String name, Film film, Theatre theatre, Auditorium auditorium, Date showDate, Time showTime, Double price, Admin admin) {
+    public void addShow(String name, Film film, Theatre theatre, Auditorium auditorium, Date showDate, Double price, Admin admin) {
+        Show show = metadata.create(Show.class);
 
+        checkShowParams(showDate, price, admin);
+
+        show.setName(name);
+        show.setFilm(film);
+        show.setTheatre(theatre);
+        show.setAuditorium(auditorium);
+        show.setShowDate(showDate);
+        show.setPrice(price);
+
+        dataManager.commit(show);
+    }
+
+    private void checkShowParams(Date showdate, Double price, Admin admin){
+        if(showdate.before(new Date())) {
+            throw new IllegalArgumentException("Date is before now");
+        }
+
+        if(price < 0){
+            throw new IllegalArgumentException("Price is negative");
+        }
+
+        if(!AppBeans.get(UserSessionSource.class).getUserSession().getUser().getId().equals(admin.getId())){
+            throw new IllegalArgumentException("Admin is not current");
+        }
     }
 
     @Override
     public void deleteShow(Show show, Admin admin) {
+     if(!AppBeans.get(UserSessionSource.class).getUserSession().getUser().getId().equals(admin.getId())){
+         throw new IllegalArgumentException("Admin is not current");
+     }
 
+     dataManager.remove(show);
     }
 
     @Override
-    public void changeShow(Show show, String name, Film film, Theatre theatre, Auditorium auditorium, Date showDate, Time showTime, Double price, Admin admin) {
+    public void changeShow(Show show, String name, Film film, Theatre theatre, Auditorium auditorium, Date showDate, Double price, Admin admin) {
+        checkShowParams(showDate, price, admin);
 
+        show.setName(name);
+        show.setFilm(film);
+        show.setTheatre(theatre);
+        show.setAuditorium(auditorium);
+        show.setShowDate(showDate);
+        show.setPrice(price);
+
+        dataManager.commit(show);
     }
 }

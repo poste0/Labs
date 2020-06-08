@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="application-enterpriselaba" insertBefore="administration">
+        <item screen="enterpriselaba_Film.browse"/>
+        <item screen="enterpriselaba_Show.browse"/>
+        <item screen="enterpriselaba_Theatre.browse"/>
+        <item screen="enterpriselaba_Auditorium.browse"/>
     </menu>
 </menu-config>
