@@ -15,16 +15,16 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="showDc">
             <column width="250px">
-                <textField id="nameField" property="name"/>
                 <dateField id="showDateField" property="showDate"/>
                 <textField id="priceField" property="price"/>
                 <lookupField id="filmField" property="film"/>
                 <lookupField id="theatreField" property="theatre"/>
                 <lookupField id="auditoriumField" property="auditorium"/>
+                <textField id="nameField" property="name"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose" invoke="onClick"/>
+            <button caption="Ok" invoke="onClick"/>
             <button action="windowClose"/>
         </hbox>
     </layout>

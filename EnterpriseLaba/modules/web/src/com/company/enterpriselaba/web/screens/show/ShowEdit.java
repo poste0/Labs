@@ -3,6 +3,7 @@ package com.company.enterpriselaba.web.screens.show;
 import com.company.enterpriselaba.entity.*;
 import com.company.enterpriselaba.service.FilmService;
 import com.company.enterpriselaba.web.screens.FillUtils;
+import com.google.common.base.Strings;
 import com.haulmont.cuba.core.entity.contracts.Id;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.DataManager;
@@ -54,14 +55,22 @@ public class ShowEdit extends StandardEditor<Show> {
 
     private User user = AppBeans.get(UserSessionSource.class).getUserSession().getUser();
 
+    private final Consumer fillNameField = new Consumer() {
+        @Override
+        public void accept(Object theatreValueChangeEvent) {
+            if(!Objects.isNull(filmField.getValue()) && !Objects.isNull(theatreField.getValue()) && !Objects.isNull(showDateField.getValue()) && Strings.isNullOrEmpty(nameField.getValue())){
+                nameField.setValue(filmField.getValue().getName() + " in " + theatreField.getValue().getName() + " at " + showDateField.getValue().toString());
+            }
+        }
+    };
+
     @Subscribe
-    private void onInit(InitEvent event){
-        auditoriumField.setEditable(false);
+    private void onInit(AfterInitEvent event){
+        auditoriumField.setEnabled(false);
 
         List<Film> films = dataManager.loadList(LoadContext.create(Film.class).setQuery(LoadContext.createQuery("SELECT f FROM enterpriselaba_Film f")));
         List<Theatre> theatres = dataManager.loadList(LoadContext.create(Theatre.class).setQuery(LoadContext.createQuery("SELECT t FROM enterpriselaba_Theatre t WHERE t.admin.id = :adminId").setParameter("adminId", user.getId())));
-        List<Auditorium> auditoriums = dataManager.loadList(LoadContext.create(Auditorium.class).setQuery(LoadContext.createQuery("SELECT a FROM enterpriselaba_Auditorium a WHERE a.theatre.id = :theatreId").setParameter("theatreId", theatreId)));
-        System.out.println(theatres);
+
         FillUtils.fillFilmField(films, filmField);
         FillUtils.fillTheatreField(theatres, theatreField);
 
@@ -70,15 +79,24 @@ public class ShowEdit extends StandardEditor<Show> {
             public void accept(HasValue.ValueChangeEvent<Theatre> theatreValueChangeEvent) {
                 Theatre theatre = theatreValueChangeEvent.getValue();
                 if(!Objects.isNull(theatre)){
-                    auditoriumField.setEditable(true);
+                    auditoriumField.setEnabled(true);
                     theatreId = theatre.getId();
-                    onInit(null);
+                    List<Auditorium> auditoriums = dataManager.loadList(LoadContext.create(Auditorium.class).setQuery(LoadContext.createQuery("SELECT a FROM enterpriselaba_Auditorium a WHERE a.theatre.id = :theatreId").setParameter("theatreId", theatreId)).setView("auditorium-view"));
+                    FillUtils.fillAuditoriumField(auditoriums, auditoriumField);
                 }
                 else{
-                    auditoriumField.setEditable(false);
+                    auditoriumField.setEnabled(false);
                 }
             }
         });
+
+        theatreField.addValueChangeListener(fillNameField);
+        filmField.addValueChangeListener(fillNameField);
+        showDateField.addValueChangeListener(fillNameField);
+
+        showDateField.setRangeStart(new Date());
+
+
     }
 
     public void onClick() {
@@ -89,6 +107,8 @@ public class ShowEdit extends StandardEditor<Show> {
         else {
             editShow(show);
         }
+
+        close(WINDOW_DISCARD_AND_CLOSE_ACTION);
     }
 
     private void createShow(){

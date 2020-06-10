@@ -20,7 +20,7 @@
             </column>
         </form>
         <hbox id="editActions" spacing="true">
-            <button action="windowCommitAndClose" invoke="onClick"/>
+            <button caption="Ok" invoke="onClick"/>
             <button action="windowClose"/>
         </hbox>
     </layout>

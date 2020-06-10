@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="com.company.enterpriselaba.web.screens.register">
+    <layout>
+        <textField id="firstNameField" caption="First name"/>
+        <textField id="lastNameField" caption="Last name"/>
+        <dateField id="birthDateField" caption="Birth date" datatype="date"/>
+        <lookupField id="typeField" caption="Type"/>
+        <lookupField id="theatreField" caption="Theatre"/>
+        <button id="registerButton" caption="register" invoke="onClick"/>
+        <textField id="loginField" caption="Login" visible="false"/>
+        <textField id="passwordField" caption="password" visible="false"/>
+        <button id="exitButton" caption="Exit" invoke="onExitClick" visible="false"/>
+    </layout>
+</window>

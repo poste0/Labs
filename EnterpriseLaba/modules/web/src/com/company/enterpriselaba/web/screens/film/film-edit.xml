@@ -15,10 +15,10 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="filmDc">
             <column width="250px">
-                <textField id="nameField"/>
-                <dateField id="startShowDateField" datatype="dateTime"/>
-                <textField id="periodOfShowingField" datatype="int"/>
-                <textArea id="descriptionField"/>
+                <textField id="nameField" caption="Film name"/>
+                <dateField id="startShowDateField" datatype="dateTime" caption="When the film will be able to be watched"/>
+                <textField id="periodOfShowingField" datatype="int" caption="How many days the film will be able"/>
+                <textArea id="descriptionField" caption="Description of the film"/>
             </column>
         </form>
         <hbox id="editActions" spacing="true">

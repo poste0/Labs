@@ -6,7 +6,7 @@ import com.haulmont.cuba.core.entity.contracts.Id;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.DataManager;
 import com.haulmont.cuba.core.global.UserSessionSource;
-import com.haulmont.cuba.gui.components.DateField;
+import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.TextArea;
 import com.haulmont.cuba.gui.components.TextField;
 import com.haulmont.cuba.gui.model.InstanceContainer;
@@ -20,6 +20,7 @@ import java.awt.*;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 @UiController("enterpriselaba_Film.edit")
 @UiDescriptor("film-edit.xml")
@@ -53,18 +54,21 @@ public class FilmEdit extends StandardEditor<Film> {
             periodOfShowingField.setValue(film.getPeriodOfShowing());
             descriptionField.setValue(film.getDescription());
         }
+
+        startShowDateField.setRangeStart(new Date());
     }
 
     public void onClick() {
-        Film film = getEditedEntity();
-        if(Objects.isNull(film.getName())){
-            createFilm();
-        }
-        else{
-            editFilm(film);
-        }
+        if(periodOfShowingField.isValid()) {
+            Film film = getEditedEntity();
+            if (Objects.isNull(film.getName())) {
+                createFilm();
+            } else {
+                editFilm(film);
+            }
 
-        close(WINDOW_COMMIT_AND_CLOSE_ACTION);
+            close(WINDOW_COMMIT_AND_CLOSE_ACTION);
+        }
     }
 
     private void createFilm(){

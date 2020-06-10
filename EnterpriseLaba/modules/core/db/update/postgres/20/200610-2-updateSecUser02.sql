@@ -1,0 +1,1 @@
+update SEC_USER set DTYPE = 'enterpriselaba_Employee' where DTYPE is null ;

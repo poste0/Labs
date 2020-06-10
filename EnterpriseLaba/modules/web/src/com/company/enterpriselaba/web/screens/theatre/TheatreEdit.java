@@ -2,6 +2,7 @@ package com.company.enterpriselaba.web.screens.theatre;
 
 import com.company.enterpriselaba.entity.Admin;
 import com.company.enterpriselaba.service.TheatreService;
+import com.google.common.base.Strings;
 import com.haulmont.cuba.core.entity.contracts.Id;
 import com.haulmont.cuba.core.global.AppBeans;
 import com.haulmont.cuba.core.global.DataManager;
@@ -33,12 +34,17 @@ public class TheatreEdit extends StandardEditor<Theatre> {
 
     public void onClick() {
         Theatre theatre = getEditedEntity();
-        if(Objects.isNull(theatre.getName())){
+        System.out.println(theatre.getId());
+        if(Strings.isNullOrEmpty(theatre.getName())){
+            System.out.println("Creating");
             createTheatre();
         }
         else{
+            System.out.println("Editing");
             editTheatre(theatre);
         }
+
+        close(WINDOW_DISCARD_AND_CLOSE_ACTION);
     }
 
     private void createTheatre(){
@@ -46,6 +52,7 @@ public class TheatreEdit extends StandardEditor<Theatre> {
         String address = addressField.getValue();
         User user = AppBeans.get(UserSessionSource.class).getUserSession().getUser();
         Admin admin = dataManager.load(Id.of(user.getId(), Admin.class)).one();
+        System.out.println(admin.getId());
 
         theatreService.addTheatre(name, address, admin);
     }

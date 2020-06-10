@@ -4,6 +4,7 @@
         <item screen="enterpriselaba_Film.browse"/>
         <item screen="enterpriselaba_Show.browse"/>
         <item screen="enterpriselaba_Theatre.browse"/>
-        <item screen="enterpriselaba_Auditorium.browse"/>
+
+        <item screen="enterpriselaba_RegisterScreen"/>
     </menu>
 </menu-config>

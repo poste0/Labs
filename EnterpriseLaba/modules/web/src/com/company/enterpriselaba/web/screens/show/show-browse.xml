@@ -10,7 +10,7 @@
                     view="show-view">
             <loader id="showsDl">
                 <query>
-                    <![CDATA[select e from enterpriselaba_Show e]]>
+                    <![CDATA[select e from enterpriselaba_Show e WHERE e.theatre.id IN :theatreId]]>
                 </query>
             </loader>
         </collection>
@@ -37,7 +37,7 @@
                 <column id="showDate"/>
                 <column id="price"/>
                 <column id="film.name"/>
-                <column id="auditorium"/>
+                <column id="auditorium.number"/>
                 <column id="theatre.name"/>
             </columns>
             <rowsCount/>

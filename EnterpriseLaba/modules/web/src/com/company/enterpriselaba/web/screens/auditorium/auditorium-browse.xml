@@ -7,7 +7,7 @@
     <data readOnly="true">
         <collection id="auditoriumsDc"
                     class="com.company.enterpriselaba.entity.Auditorium"
-                    view="_local">
+                    view="auditorium-view">
             <loader id="auditoriumsDl">
                 <query>
                     <![CDATA[select e from enterpriselaba_Auditorium e WHERE e.theatre.admin.id = :userId]]>
@@ -34,7 +34,8 @@
             </actions>
             <columns>
                 <column id="countOfSeats"/>
-                <column id="theatre"/>
+                <column id="theatre.name"/>
+                <column id="number"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

@@ -1,10 +1,12 @@
 package com.company.enterpriselaba.web.screens;
 
+import com.company.enterpriselaba.entity.Auditorium;
 import com.company.enterpriselaba.entity.Film;
 import com.company.enterpriselaba.entity.Theatre;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.components.LookupField;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,5 +30,19 @@ public final class FillUtils {
         });
 
         theatreField.setOptionsMap(theatreMap);
+    }
+
+    public static void fillAuditoriumField(List<Auditorium> auditoriums, LookupField<Auditorium> auditoriumField){
+        Map<String, Auditorium> auditoriumMap  = new HashMap<>();
+
+        auditoriums.forEach(auditorium -> {
+            auditoriumMap.put(auditorium.getTheatre().getName() + "'s auditorium " + auditorium.getNumber(), auditorium);
+        });
+
+        auditoriumField.setOptionsMap(auditoriumMap);
+    }
+
+    public static void fillTypeField(LookupField<String> typeField){
+        typeField.setOptionsList(Arrays.asList("Admin", "Employee"));
     }
 }

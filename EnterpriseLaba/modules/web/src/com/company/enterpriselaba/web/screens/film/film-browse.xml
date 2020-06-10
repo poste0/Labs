@@ -35,10 +35,10 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="name"/>
-                <column id="startShowDate"/>
-                <column id="periodOfShowing"/>
-                <column id="description"/>
+                <column id="name" caption="Film name"/>
+                <column id="startShowDate" caption="Starts at"/>
+                <column id="periodOfShowing" caption="Can be watched" generator="periodOfShowingGenerator"/>
+                <column id="description" caption="Description"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
