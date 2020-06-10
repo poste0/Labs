@@ -10,7 +10,7 @@
                     view="show-view">
             <loader id="showsDl">
                 <query>
-                    <![CDATA[select e from enterpriselaba_Show e WHERE e.theatre.id IN :theatreId]]>
+                    <![CDATA[select e from enterpriselaba_Show e]]>
                 </query>
             </loader>
         </collection>

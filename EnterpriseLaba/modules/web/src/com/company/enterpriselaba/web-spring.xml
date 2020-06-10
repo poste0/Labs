@@ -13,7 +13,6 @@
             <map>
                 <entry key="enterpriselaba_FilmService" value="com.company.enterpriselaba.service.FilmService"/>
                 <entry key="enterpriselaba_TheatreService" value="com.company.enterpriselaba.service.TheatreService"/>
-                <entry key="enterpriselaba_RegisterService" value="com.company.enterpriselaba.service.RegisterService"/>
             </map>
         </property>
     </bean>
