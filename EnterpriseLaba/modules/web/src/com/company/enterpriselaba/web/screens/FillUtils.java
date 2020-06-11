@@ -2,6 +2,7 @@ package com.company.enterpriselaba.web.screens;
 
 import com.company.enterpriselaba.entity.Auditorium;
 import com.company.enterpriselaba.entity.Film;
+import com.company.enterpriselaba.entity.Show;
 import com.company.enterpriselaba.entity.Theatre;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.components.LookupField;
@@ -44,5 +45,15 @@ public final class FillUtils {
 
     public static void fillTypeField(LookupField<String> typeField){
         typeField.setOptionsList(Arrays.asList("Admin", "Employee"));
+    }
+
+    public static void fillShowField(List<Show> shows, LookupField<Show> showField){
+        Map<String, Show> showMap  = new HashMap<>();
+
+        shows.forEach(show -> {
+            showMap.put(show.getName(), show);
+        });
+
+        showField.setOptionsMap(showMap);
     }
 }

@@ -56,7 +56,7 @@ public class AuditoriumEdit extends StandardEditor<Auditorium> {
 
     public void onClick() {
         Auditorium auditorium = getEditedEntity();
-        if(dataManager.load(Id.of(auditorium.getId(), Auditorium.class)).optional().isEmpty()){
+        if(!dataManager.load(Id.of(auditorium.getId(), Auditorium.class)).optional().isPresent()){
             System.out.println("Create");
             createAuditorium();
         }

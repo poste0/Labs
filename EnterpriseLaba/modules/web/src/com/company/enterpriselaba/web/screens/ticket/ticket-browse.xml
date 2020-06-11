@@ -2,46 +2,48 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
         caption="msg://browseCaption"
-        focusComponent="theatresTable"
-        messagesPack="com.company.enterpriselaba.web.screens.theatre">
+        focusComponent="ticketsTable"
+        messagesPack="com.company.enterpriselaba.web.screens.ticket">
     <data readOnly="true">
-        <collection id="theatresDc"
-                    class="com.company.enterpriselaba.entity.Theatre"
-                    view="_local">
-            <loader id="theatresDl">
+        <collection id="ticketsDc"
+                    class="com.company.enterpriselaba.entity.Ticket"
+                    view="ticket-view">
+            <loader id="ticketsDl">
                 <query>
-                    <![CDATA[select e from enterpriselaba_Theatre e]]>
+                    <![CDATA[select e from enterpriselaba_Ticket e]]>
                 </query>
             </loader>
         </collection>
     </data>
     <dialogMode height="600"
                 width="800"/>
-    <layout expand="theatresTable"
+    <layout expand="ticketsTable"
             spacing="true">
         <filter id="filter"
-                applyTo="theatresTable"
-                dataLoader="theatresDl">
+                applyTo="ticketsTable"
+                dataLoader="ticketsDl">
             <properties include=".*"/>
         </filter>
-        <groupTable id="theatresTable"
+        <groupTable id="ticketsTable"
                     width="100%"
-                    dataContainer="theatresDc">
+                    dataContainer="ticketsDc">
             <actions>
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="name" caption="Theatre name"/>
-                <column id="address" caption="Theatre address"/>
+                <column id="status"/>
+                <group>
+                    <column id="show.name"/>
+                </group>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
                           alwaysVisible="true">
-                <button id="createBtn" action="theatresTable.create"/>
-                <button id="editBtn" action="theatresTable.edit"/>
-                <button id="removeBtn" action="theatresTable.remove"/>
+                <button id="createBtn" action="ticketsTable.create"/>
+                <button id="editBtn" action="ticketsTable.edit"/>
+                <button id="removeBtn" action="ticketsTable.remove"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">

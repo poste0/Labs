@@ -2,6 +2,7 @@ package com.company.enterpriselaba.web.screens.theatre;
 
 import com.company.enterpriselaba.entity.Admin;
 import com.company.enterpriselaba.service.TheatreService;
+import com.company.enterpriselaba.service.TicketService;
 import com.google.common.base.Strings;
 import com.haulmont.cuba.core.entity.contracts.Id;
 import com.haulmont.cuba.core.global.AppBeans;

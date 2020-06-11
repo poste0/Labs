@@ -5,8 +5,13 @@
         <property name="auditorium" view="_local"/>
         <property name="film" view="_local"/>
         <property name="theatre" view="_local"/>
+        <property name="tickets" view="_local"/>
     </view>
     <view entity="enterpriselaba_Auditorium" name="auditorium-view" extends="_local">
         <property name="theatre" view="_local"/>
+    </view>
+    <view entity="enterpriselaba_Ticket" name="ticket-view">
+        <property name="show" view="_local"/>
+        <property name="status"/>
     </view>
 </views>

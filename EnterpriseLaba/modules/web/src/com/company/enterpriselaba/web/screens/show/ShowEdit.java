@@ -69,6 +69,10 @@ public class ShowEdit extends StandardEditor<Show> {
         auditoriumField.setEnabled(false);
 
         List<Film> films = dataManager.loadList(LoadContext.create(Film.class).setQuery(LoadContext.createQuery("SELECT f FROM enterpriselaba_Film f")));
+        films = films.stream().filter(film -> {
+            Date endDate = Date.from(film.getStartShowDate().toInstant().plusSeconds(film.getPeriodOfShowing() * 24 * 60 * 60));
+            return new Date().before(endDate) && film.getStartShowDate().before(new Date());
+        }).collect(Collectors.toList());
         List<Theatre> theatres = dataManager.loadList(LoadContext.create(Theatre.class).setQuery(LoadContext.createQuery("SELECT t FROM enterpriselaba_Theatre t WHERE t.admin.id = :adminId").setParameter("adminId", user.getId())));
 
         FillUtils.fillFilmField(films, filmField);

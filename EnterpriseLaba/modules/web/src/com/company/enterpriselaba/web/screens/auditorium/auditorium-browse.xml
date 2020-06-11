@@ -33,9 +33,9 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="countOfSeats"/>
-                <column id="theatre.name"/>
-                <column id="number"/>
+                <column id="countOfSeats" caption="Count of seats"/>
+                <column id="theatre.name" caption="Theatre name"/>
+                <column id="number" caption="Auditorium number"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"

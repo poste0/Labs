@@ -33,12 +33,13 @@
                 <action id="remove" type="remove"/>
             </actions>
             <columns>
-                <column id="name"/>
-                <column id="showDate"/>
-                <column id="price"/>
-                <column id="film.name"/>
-                <column id="auditorium.number"/>
-                <column id="theatre.name"/>
+                <column id="name" caption="Show name"/>
+                <column id="showDate" caption="Show date"/>
+                <column id="price" caption="Ticket price"/>
+                <column id="film.name" caption="Film name"/>
+                <column id="auditorium.number" caption="Number of auditorium"/>
+                <column id="seatsAvailable" caption="Seats available (All)" generator="seatsAvailableGenerator"/>
+                <column id="theatre.name" caption="Theatre name"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
@@ -46,6 +47,7 @@
                 <button id="createBtn" action="showsTable.create"/>
                 <button id="editBtn" action="showsTable.edit"/>
                 <button id="removeBtn" action="showsTable.remove"/>
+                <button id="ticketButton" caption="Sell ticket" invoke="sellTicketClick" enable="false"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
