@@ -96,6 +96,20 @@ public class ShowEdit extends StandardEditor<Show> {
 
         theatreField.addValueChangeListener(fillNameField);
         filmField.addValueChangeListener(fillNameField);
+        filmField.addValueChangeListener(new Consumer<HasValue.ValueChangeEvent<Film>>() {
+            @Override
+            public void accept(HasValue.ValueChangeEvent<Film> filmValueChangeEvent) {
+                if(!Objects.isNull(filmValueChangeEvent.getValue())){
+                    showDateField.setEnabled(true);
+                    Film film = filmValueChangeEvent.getValue();
+                    Date endDate = Date.from(film.getStartShowDate().toInstant().plusSeconds(film.getPeriodOfShowing() * 24 * 60 * 60));
+                    showDateField.setRangeEnd(endDate);
+                }
+                else{
+                    showDateField.setEnabled(false);
+                }
+            }
+        });
         showDateField.addValueChangeListener(fillNameField);
 
         showDateField.setRangeStart(new Date());

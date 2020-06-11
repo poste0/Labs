@@ -15,7 +15,7 @@
     <layout expand="editActions" spacing="true">
         <form id="form" dataContainer="showDc">
             <column width="250px">
-                <dateField id="showDateField" property="showDate"/>
+                <dateField id="showDateField" property="showDate" enable="false"/>
                 <textField id="priceField" property="price"/>
                 <lookupField id="filmField" property="film"/>
                 <lookupField id="theatreField" property="theatre"/>
