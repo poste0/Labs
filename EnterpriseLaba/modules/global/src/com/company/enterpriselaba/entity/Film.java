@@ -3,10 +3,7 @@ package com.company.enterpriselaba.entity;
 import com.esotericsoftware.kryo.NotNull;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +28,7 @@ public class Film extends StandardEntity {
     @NotNull
     private String description;
 
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Show> shows;
 
     public String getDescription() {

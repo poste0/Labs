@@ -36,10 +36,6 @@ public class Show extends StandardEntity {
     @NotNull
     private Date showDate;
 
-    @Column(name = "showTime")
-    @NotNull
-    private Time showTime;
-
     @Column(name = "price")
     @NotNull
     private Double price;
@@ -82,14 +78,6 @@ public class Show extends StandardEntity {
 
     public void setShowDate(Date showDate) {
         this.showDate = showDate;
-    }
-
-    public Time getShowTime() {
-        return showTime;
-    }
-
-    public void setShowTime(Time showTime) {
-        this.showTime = showTime;
     }
 
     public Double getPrice() {

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="showsTable"
+        messagesPack="com.company.enterpriselaba.web.screens.show">
+    <data readOnly="true">
+        <collection id="showsDc"
+                    class="com.company.enterpriselaba.entity.Show"
+                    view="show-view">
+            <loader id="showsDl">
+                <query>
+                    <![CDATA[select e from enterpriselaba_Show e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="showsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="showsTable"
+                dataLoader="showsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="showsTable"
+                    width="100%"
+                    dataContainer="showsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="name" caption="Show name"/>
+                <column id="showDate" caption="Show date"/>
+                <column id="price" caption="Ticket price"/>
+                <column id="film.name" caption="Film name"/>
+                <column id="auditorium.number" caption="Number of auditorium"/>
+                <column id="seatsAvailable" caption="Seats available (All)" generator="seatsAvailableGenerator"/>
+                <column id="theatre.name" caption="Theatre name"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="showsTable.create"/>
+                <button id="editBtn" action="showsTable.edit"/>
+                <button id="removeBtn" action="showsTable.remove"/>
+                <button id="ticketButton" caption="Sell ticket" invoke="sellTicketClick" enable="false"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

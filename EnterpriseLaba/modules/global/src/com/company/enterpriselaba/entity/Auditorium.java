@@ -15,6 +15,10 @@ public class Auditorium extends StandardEntity {
     @NotNull
     private Integer countOfSeats;
 
+    @Column(name = "number")
+    @NotNull
+    private Integer number;
+
     @ManyToOne
     @JoinColumn(name = "theatre_id")
     private Theatre theatre;
@@ -44,5 +48,13 @@ public class Auditorium extends StandardEntity {
 
     public void setTheatre(Theatre theatre) {
         this.theatre = theatre;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

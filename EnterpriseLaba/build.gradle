@@ -1,14 +1,13 @@
-
 buildscript {
     ext.cubaVersion = '7.2.4'
     repositories {
         maven {
             url 'https://dl.bintray.com/cuba-platform/main'
-            
+
         }
         jcenter()
 
-        
+
     }
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
@@ -33,6 +32,7 @@ cuba {
     }
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
+        port = '8081'
     }
 }
 
@@ -188,3 +188,7 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
     }
 }
 
+task buildUberJar(type: CubaUberJarBuilding) {
+    singleJar = true
+    appProperties = ['cuba.automaticDatabaseUpdate': true]
+}

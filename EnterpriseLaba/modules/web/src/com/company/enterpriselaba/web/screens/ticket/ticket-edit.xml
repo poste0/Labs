@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.enterpriselaba.web.screens.ticket">
+    <data>
+        <instance id="ticketDc"
+                  class="com.company.enterpriselaba.entity.Ticket"
+                  view="ticket-view">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="ticketDc">
+            <column width="250px">
+                <lookupField id="showField" caption="Show"/>
+                <textField id="countOFTickets" caption="Count of tickets" datatype="int" required="true"/>
+                <label id="cannotSellLabel" visible="false" value="You cannot sell the tickets because there not enough seats"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button id="ticketButton" caption="Ok" invoke="onClick"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>
